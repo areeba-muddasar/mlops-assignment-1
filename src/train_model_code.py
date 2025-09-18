@@ -1,11 +1,10 @@
-# Import required libraries
+# Import library
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-import joblib
 import os
 import pandas as pd
 
@@ -25,12 +24,10 @@ models = {
 }
 
 # Step 4: Create folders if they don't exist
-if not os.path.exists('models'):
-    os.makedirs('models')
 if not os.path.exists('results'):
     os.makedirs('results')
 
-# Step 5: Train models, evaluate, save models and metrics
+# Step 5: Train models, evaluate, save only metrics
 results = []
 
 for name, model in models.items():
@@ -46,10 +43,6 @@ for name, model in models.items():
     recall = recall_score(y_test, y_pred, average='weighted')
     f1 = f1_score(y_test, y_pred, average='weighted')
     
-    # Save model
-    filename = f"models/{name.replace(' ', '_').lower()}.joblib"
-    joblib.dump(model, filename)
-    
     # Save metrics
     results.append({
         "Model": name,
@@ -59,7 +52,7 @@ for name, model in models.items():
         "F1-score": f1
     })
     
-    print(f"{name} trained and saved as {filename}")
+    print(f"{name} trained successfully.")
 
 # Step 6: Save metrics to CSV
 results_df = pd.DataFrame(results)
