@@ -1,4 +1,4 @@
-# Import library
+# Import libraries
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -7,6 +7,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import os
 import pandas as pd
+import pickle
 
 # Step 1: Load Iris dataset
 iris = load_iris()
@@ -27,7 +28,10 @@ models = {
 if not os.path.exists('results'):
     os.makedirs('results')
 
-# Step 5: Train models, evaluate, save only metrics
+if not os.path.exists('models'):
+    os.makedirs('models')
+
+# Step 5: Train models, evaluate, and save metrics & models
 results = []
 
 for name, model in models.items():
@@ -52,7 +56,12 @@ for name, model in models.items():
         "F1-score": f1
     })
     
-    print(f"{name} trained successfully.")
+    # Save trained model
+    model_file = f"models/{name.replace(' ', '_')}.pkl"
+    with open(model_file, 'wb') as f:
+        pickle.dump(model, f)
+    
+    print(f"{name} trained and saved successfully.")
 
 # Step 6: Save metrics to CSV
 results_df = pd.DataFrame(results)
