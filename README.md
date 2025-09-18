@@ -48,6 +48,11 @@ Additionally, the assignment demonstrates **MLflow logging** and **model registr
 > *Metrics may vary depending on train-test split.*
 
 ---
+## Experiment Overview
+![Experiment Overview](screenshots/mlflow_overview.png)
+
+### Logistic Regression Run
+![Logistic Regression](screenshots/logistic_regression.png)
 
 ## 4. MLflow Logging & Model Registration
 
