@@ -1,5 +1,6 @@
-# Import libraries
+# src/train_model_mlflow.py
 
+# Import libraries
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -23,8 +24,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # Step 3: Initialize models
 models = {
-    "Logistic Regression": LogisticRegression(max_iter=200),
-    "Random Forest": RandomForestClassifier(n_estimators=100),
+    "Logistic_Regression": LogisticRegression(max_iter=200),
+    "Random_Forest": RandomForestClassifier(n_estimators=100),
     "SVM": SVC(kernel='linear', probability=True)
 }
 
@@ -43,13 +44,11 @@ for name, model in models.items():
         # Log hyperparameters
         mlflow.log_params(model.get_params())
         
-        # Train
+        # Train model
         model.fit(X_train, y_train)
-        
-        # Predict
         y_pred = model.predict(X_test)
         
-        # Metrics
+        # Compute metrics
         accuracy = accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred, average='weighted')
         recall = recall_score(y_test, y_pred, average='weighted')
@@ -73,16 +72,16 @@ for name, model in models.items():
         })
         
         # Save trained model locally
-        model_file = f"models/{name.replace(' ', '_')}.pkl"
+        model_file = f"models/{name}.pkl"
         with open(model_file, 'wb') as f:
             pickle.dump(model, f)
         
         # Log model with MLflow
-        mlflow.sklearn.log_model(model, name.replace(' ', '_'))
+        mlflow.sklearn.log_model(model, name)
         
         # Confusion matrix as artifact
         cm_display = ConfusionMatrixDisplay.from_estimator(model, X_test, y_test)
-        cm_path = f"results/{name.replace(' ', '_')}_confusion_matrix.png"
+        cm_path = f"results/{name}_confusion_matrix.png"
         plt.savefig(cm_path)
         plt.close()
         mlflow.log_artifact(cm_path)
