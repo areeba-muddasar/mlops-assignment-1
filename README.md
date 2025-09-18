@@ -55,16 +55,6 @@ Additionally, the assignment demonstrates **MLflow logging** and **model registr
 - Each run logs: model name, hyperparameters, and evaluation metrics.  
 - Registered models can be used later for deployment or inference.  
 
-**MLflow Run Screenshot:**  
-![MLflow Run](screenshots/mlflow_run.png)
-
-**MLflow Model Registration Screenshot:**  
-![MLflow Model Registration](screenshots/mlflow_model_registration.png)
-
-> *Replace placeholders with actual screenshots after running MLflow.*
-
----
-
 ## 5. Instructions to Run the Code
 
 ### Step 1: Clone the Repository
